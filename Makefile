@@ -14,21 +14,28 @@ OBJS	= $(SRCS_C:.c=.c.o) $(SRCS_S:.s=.s.o)
 TARGET	= libc
 
 %.c.o: %.c
-	$(CC) $(CFLAGS) -c -o $@ $<
+	@echo "CC	$@"
+	@$(CC) $(CFLAGS) -c -o $@ $<
 
 %.s.o: %.s
-	$(AS) $(AFLAGS) -c -o $@ $<
+	@echo "AS	$@"
+	@$(AS) $(AFLAGS) -c -o $@ $<
 
 all: $(OBJS) static shared
 
 static: $(OBJS)
-	$(AR) rc $(TARGET).a $(OBJS)
-	$(RANLIB) $(TARGET).a
+	@echo "AR	$(TARGET).a"
+	@$(AR) rc $(TARGET).a $(OBJS)
+	@echo "RANLIB	$(TARGET).a"
+	@$(RANLIB) $(TARGET).a
 
 shared: $(OBJS)
-	$(CC) $(CFLAGS) -shared -o $(TARGET).so $(OBJS)
+	@echo "SHARED	$(TARGET).so"
+	@$(CC) $(CFLAGS) -shared -o $(TARGET).so $(OBJS)
 clean:
-	$(RM) $(OBJS) $(TARGET).*
+	@echo "RM	OBJS"
+	@echo "RM	$(TARGET).*"
+	@$(RM) $(OBJS) $(TARGET).*
 
 distclean: clean
 
